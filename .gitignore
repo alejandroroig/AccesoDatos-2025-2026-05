@@ -1,0 +1,37 @@
+# Archivos y directorios generados por Maven/Gradle
+target/
+build/
+.gradle/
+!**/src/main/resources/application-dev.properties
+
+# Archivos de IDE (Eclipse, IntelliJ, VSCode)
+.project
+.classpath
+.settings/
+*.iml
+*.iws
+*.ipr
+.vscode/
+
+# Archivos de logs y temporales
+*.log
+logs/
+tmp/
+
+# Archivos de compilación y artefactos
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# Dependencias locales y caché
+.mvn/wrapper/maven-wrapper.jar
+~/.m2/repository/
+
+# Archivos de entorno y credenciales (¡IMPORTANTE!)
+.env
+.env.*
+*.properties
+*.yml # Si contienen secretos
