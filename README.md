@@ -1,6 +1,6 @@
 # Acceso a Datos - UD05 Mapeo Objeto-Relacional
 
-UD05 Mapeo Objeto-Relacional. 2DAM. Curso 2024/2025. 
+UD05 Mapeo Objeto-Relacional. 2DAM. Curso 2025/2026. 
 
 IES Álvaro Falomir. Almazora (Castellón)
 
