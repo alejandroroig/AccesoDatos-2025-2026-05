@@ -1,8 +1,8 @@
 package org.accesodatos.spring.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -20,6 +20,7 @@ public class Perfil {
     private String telefono;
     private String direccion;
 
+    @ToString.Exclude
     @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false, unique = true)
     private Usuario usuario;

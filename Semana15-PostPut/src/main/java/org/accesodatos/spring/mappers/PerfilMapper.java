@@ -32,9 +32,10 @@ public class PerfilMapper {
         return perfil;
     }
 
-    public void updateEntityFromDto(PerfilUpdateDTO dto, Perfil perfil) {
+    public void updatePerfilFromDto(PerfilUpdateDTO dto, Perfil perfil) {
         if (dto == null || perfil == null) return;
 
+        // Actualizamos campos
         perfil.setTelefono(dto.getTelefono());
         perfil.setDireccion(dto.getDireccion());
     }

@@ -1,5 +1,6 @@
 package org.accesodatos.spring.services.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.accesodatos.spring.dtos.request.create.UsuarioCreateDTO;
 import org.accesodatos.spring.dtos.request.update.UsuarioUpdateDTO;
@@ -37,17 +38,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioMapper.toDto(usuario);
     }
 
+
     @Override
     @Transactional
     public UsuarioDTO crearUsuario(UsuarioCreateDTO dto) {
         Usuario usuario = usuarioMapper.toEntity(dto);
-
-        if (dto.getFechaRegistro() == null) {
-            usuario.setFechaRegistro(LocalDate.now());
-        }
-
-        // Sincronizamos la relación bidireccional
-        usuario.getPerfil().setUsuario(usuario);
 
         // Persistimos el usuario (automáticamente persistirá el perfil debido a la cascada)
         Usuario usuarioGuardado = usuarioRepository.save(usuario);
@@ -57,12 +52,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional
     public UsuarioDTO actualizarUsuario(Long id, UsuarioUpdateDTO dto) {
+        // 1. Buscar el usuario real en la BBDD por Id
         Usuario usuarioExistente = usuarioRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado con id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado con id: " + id));
 
-        usuarioMapper.updateEntityFromDto(dto, usuarioExistente);
-        Usuario usuarioActualizado = usuarioRepository.save(usuarioExistente);
+        // 2. Actualizar los campos, no crear un usuario nuevo
+        usuarioMapper.updateUsuarioFromDto(dto, usuarioExistente);
 
-        return usuarioMapper.toDto(usuarioActualizado);
+        // 3. Guardar el usuario que ya tiene su estado original preservado
+        return usuarioMapper.toDto(usuarioRepository.save(usuarioExistente));
     }
 }

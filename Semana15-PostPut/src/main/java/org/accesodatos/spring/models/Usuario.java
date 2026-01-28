@@ -1,6 +1,5 @@
 package org.accesodatos.spring.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -28,16 +27,27 @@ public class Usuario {
     @Column(name = "fecha_registro", nullable = false)
     private LocalDate fechaRegistro;
 
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Perfil perfil;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Cuenta> cuentas;
+
+
     @PrePersist
+    // Otra opción más profesionales es la anotación @CreatedDate, que requiere añadir
+    // @EnableJpaAuditing en la configuración
     public void prePersist() {
         if (fechaRegistro == null) {
             fechaRegistro = LocalDate.now();
         }
     }
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Perfil perfil;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cuenta> cuentas;
+    // Para resolver la sincronización automática de la relación bidireccional Usuario - Perfil
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+        if (perfil != null) {
+            perfil.setUsuario(this);
+        }
+    }
 }

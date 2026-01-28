@@ -27,6 +27,7 @@ public class UsuarioMapper {
         dto.setEmail(usuario.getEmail());
         dto.setFechaRegistro(usuario.getFechaRegistro());
         dto.setPerfil(perfilMapper.toDto(usuario.getPerfil()));
+
         if (usuario.getCuentas() != null) {
             dto.setCuentas(usuario.getCuentas().stream().map(Cuenta::getId).toList());
         } else {
@@ -43,7 +44,6 @@ public class UsuarioMapper {
         usuario.setUsername(dto.getUsername());
         usuario.setPassword(dto.getPassword());
         usuario.setEmail(dto.getEmail());
-        usuario.setFechaRegistro(dto.getFechaRegistro());
 
         Perfil perfil = perfilMapper.toEntity(dto.getPerfil());
         perfil.setUsuario(usuario);
@@ -52,11 +52,12 @@ public class UsuarioMapper {
         return usuario;
     }
 
-    public void updateEntityFromDto(UsuarioUpdateDTO dto, Usuario usuario) {
+    public void updateUsuarioFromDto(UsuarioUpdateDTO dto, Usuario usuario) {
         if (dto == null || usuario == null) return;
 
+        // Actualizamos campos y perfil
         usuario.setPassword(dto.getPassword());
         usuario.setEmail(dto.getEmail());
-        perfilMapper.updateEntityFromDto(dto.getPerfil(), usuario.getPerfil());
+        perfilMapper.updatePerfilFromDto(dto.getPerfil(), usuario.getPerfil());
     }
 }

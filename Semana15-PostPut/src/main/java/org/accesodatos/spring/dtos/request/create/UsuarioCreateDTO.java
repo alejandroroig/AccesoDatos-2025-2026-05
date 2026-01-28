@@ -21,8 +21,6 @@ public class UsuarioCreateDTO {
     @Email(message = "El formato del email es inválido")
     private String email;
 
-    private LocalDate fechaRegistro;
-
     @Valid
     @NotNull(message = "El perfil es obligatorio.")
     private PerfilCreateDTO perfil;

@@ -1,6 +1,5 @@
 package org.accesodatos.spring.dtos.response;
 
-
 import lombok.Data;
 
 @Data
