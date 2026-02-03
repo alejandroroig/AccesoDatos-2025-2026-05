@@ -39,5 +39,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleNotFound(EntityNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<String> handleIllegalState(IllegalStateException ex) {
+    // Devolvemos 409 Conflict porque el borrado entra en conflicto con el estado actual del usuario (tiene cuentas)
+    return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
 }
 
