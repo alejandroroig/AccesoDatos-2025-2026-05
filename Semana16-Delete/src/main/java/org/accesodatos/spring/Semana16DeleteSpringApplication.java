@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Semana16DeleteSpringApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Semana15PostPutSpringApplication.class, args);
+        SpringApplication.run(Semana16DeleteSpringApplication.class, args);
     }
 
 }
